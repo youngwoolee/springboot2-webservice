@@ -11,15 +11,15 @@
  * ------------------       --------------            ------------------
  *   joeylee                2019-12-09
  */
-package com.joeylee.book.springboot.domain.posts;
+package com.joeylee.book.springboot.config.auth;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import java.util.List;
+@Target(ElementType.PARAMETER) //메소드의 파라미터로 선언된 객체에서만 사용 가능
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LoginUser {
 
-public interface PostsRepository extends JpaRepository<Posts, Long> {
-
-    @Query("SELECT p FROM Posts p ORDER BY p.id DESC")
-    List<Posts> findAllDesc();
 }
