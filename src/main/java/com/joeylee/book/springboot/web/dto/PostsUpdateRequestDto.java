@@ -11,39 +11,29 @@
  * ------------------       --------------            ------------------
  *   joeylee                2019-12-09
  */
-package com.joeylee.book.springboot.domain.posts;
+package com.joeylee.book.springboot.web.dto;
 
+import com.joeylee.book.springboot.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Getter
 @NoArgsConstructor
-@Entity
-public class Posts {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //auto_increment
-    private Long id;
-
-    @Column(length = 500, nullable = false)
+public class PostsUpdateRequestDto {
     private String title;
-
-    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private String author;
-
     @Builder
-    public Posts(String title, String content, String author) {
+    public PostsUpdateRequestDto(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 
-    public void update(String title, String content) {
-        this.title = title;
-        this.content = content;
+    public Posts toEntity() {
+        return Posts.builder()
+                .title(title)
+                .content(content)
+                .build();
     }
 }
