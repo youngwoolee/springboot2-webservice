@@ -38,7 +38,42 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+        if("naver".equals(registrationId)) {
+            return ofNaver("id", attributes);
+        }
         return ofGoogle(userNameAttributeName, attributes);
+    }
+
+    /**
+     * {
+     *     "resultcode" : "00",
+     *     "message" : "success",
+     *     "response" : {
+     *         "email": openapi@naver.com",
+     *         "nickname": "OpenAPI",
+     *         "profile_image": "https://ssl.pstatic.net/static/pwe/address/nodata_33x33.gif",
+     *         "age": "40-49",
+     *         "gender": "F",
+     *         "id": "32742776",
+     *         "name": "오픈API",
+     *         "birthday": "10-01"
+     *     }
+     * }
+     * @param userNameAttributeName
+     * @param attributes
+     * @return
+     */
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        return OAuthAttributes.builder()
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
+                .picture((String) response.get("profileImage"))
+                .attributes(response)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
