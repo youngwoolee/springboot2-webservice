@@ -21,7 +21,7 @@ notifications:
       - leeyw910205@gmail.com
 
 before_deploy:
-  - zip -r springboo2-webservice *
+  - zip -r springboot2-webservice *
   - mkdir -p deploy
   - mv springboot2-webservice.zip deploy/springboot2-webservice.zip
 
